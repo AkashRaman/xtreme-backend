@@ -3,6 +3,7 @@ const app = express();
 const cors = require("cors");
 const Users = require("./model/User");
 const mongoose = require('mongoose');
+const ObjectId = require('mongodb').ObjectId;
 var morgan = require('morgan');
 require("dotenv").config({ path: "./config.env" });
 const port = process.env.PORT || 3000;
@@ -61,7 +62,6 @@ app.post('/user/register', async (req,res) => {
   }
 
   const user = new Users({
-    _id: String,
     first_name: `${req.body.first_name}`,
     last_name: `${req.body.last_name}`,
     email: `${req.body.email}`,
@@ -77,8 +77,10 @@ app.post('/user/register', async (req,res) => {
 app.post('/user', async (req,res) => {
   console.log(req.body);
   const token = req.body.token;
-  await Users.findById(token, function(error, user) {
-    if(error) res.send({
+  const idToSearch = new ObjectId(token);
+
+  await Users.findById(idToSearch, function(error, user) {
+    if(user === undefined) res.send({
       first_name: `Unavailable`,
       last_name: ``,
       email: ``,
