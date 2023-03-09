@@ -78,8 +78,16 @@ app.post('/user', async (req,res) => {
   console.log(req.body);
   const token = req.body.token;
   const idToSearch = new ObjectId(token);
-
-  const userFound = await Users.findById(idToSearch);
+  console.log(idToSearch);
+  let userFound = await Users.findById(idToSearch);
+  console.log(userFound);
+  userFound = !userFound ? {
+    first_name: `Unavailable`,
+    last_name: ``,
+    email: ``,
+    password: ``,
+    contents: []
+  } : userFound;
   res.send(userFound);
 })
  
