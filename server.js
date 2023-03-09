@@ -61,6 +61,7 @@ app.post('/user/register', async (req,res) => {
   }
 
   const user = new Users({
+    _id: String,
     first_name: `${req.body.first_name}`,
     last_name: `${req.body.last_name}`,
     email: `${req.body.email}`,
