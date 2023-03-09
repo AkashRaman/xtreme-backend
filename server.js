@@ -73,6 +73,7 @@ app.post('/user/register', async (req,res) => {
 })
 
 app.post('/user', async (req,res) => {
+  console.log(req.body);
   const token= req.body.token;
   const user = await Users.findById({token});
   return res.send(user);
