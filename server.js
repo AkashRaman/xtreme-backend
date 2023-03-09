@@ -66,7 +66,7 @@ app.post('/user/register', async (req,res) => {
   const user = new Users({
     email: `${req.body.email}`,
     password: `${req.body.password}`,
-    content: []
+    contents: []
   });
   console.log(user);
   const result = await user.save();
