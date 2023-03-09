@@ -75,8 +75,8 @@ app.post('/user/register', async (req,res) => {
 
 app.post('/user', async (req,res) => {
   console.log(req.body);
-  const token = new mongoose.Types.ObjectId(req.body.token);
-  const user = await Users.find({ _id:token });
+  const token = `${req.body.token}`;
+  const user = await Users.findById({ token });
   return res.send(user);
 })
  
