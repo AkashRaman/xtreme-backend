@@ -17,7 +17,6 @@ app.get('*', async(req,res) => {
 })
 
 app.post('/user/login', async (req,res) => {
-  console.log("working3");
   const email = req.body.email;
   const password = req.body.password;
   if(email === '' || password === ''){
@@ -36,12 +35,10 @@ app.post('/user/login', async (req,res) => {
 
   if(user == null) return res.send(500, { error: 'User Not Found' });
 
-  console.log(user._id);
   return res.send(user);
 })
 
 app.post('/user/register', async (req,res) => {
-  console.log("working2");
   const email = req.body.email;
   const password = req.body.password;
   if(email === '' || password === ''){
@@ -62,7 +59,6 @@ app.post('/user/register', async (req,res) => {
     return res.send(500, { error: 'Email already exists' });
   }
 
-  console.log('unique');
   const user = new Users({
     first_name: `${req.body.first_name}`,
     last_name: `${req.body.last_name}`,
@@ -70,22 +66,17 @@ app.post('/user/register', async (req,res) => {
     password: `${req.body.password}`,
     contents: []
   });
-  console.log(user);
+
   const result = await user.save();
-  console.log(result._id);
+  
   return res.send(result);
 })
 
-// app.post('/', async (req,res) => {
-//   console.log("working");
-//   console.log(req.body);
-//   const user = new Users({
-//     email: `${req.body.name}`,
-//     password: ``,
-//     content: []
-//   });
-//   return user.save();
-// })
+app.post('/', async (req,res) => {
+  const token= req.body.token;
+  const user = await Users.findById({token});
+  return res.send(user);
+})
  
 app.listen(port, () => {
   // perform a database connection when server starts
