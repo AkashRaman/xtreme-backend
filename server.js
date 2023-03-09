@@ -79,16 +79,8 @@ app.post('/user', async (req,res) => {
   const token = req.body.token;
   const idToSearch = new ObjectId(token);
 
-  await Users.findById(idToSearch, function(error, user) {
-    if(user === undefined) res.send({
-      first_name: `Unavailable`,
-      last_name: ``,
-      email: ``,
-      password: ``,
-      contents: []
-    });
-    res.send(user);
-  });
+  const userFound = await Users.findById(idToSearch);
+  res.send(userFound);
 })
  
 app.listen(port, () => {
