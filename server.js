@@ -64,6 +64,8 @@ app.post('/user/register', async (req,res) => {
 
   console.log('unique');
   const user = new Users({
+    first_name: `${req.body.first_name}`,
+    last_name: `${req.body.last_name}`,
     email: `${req.body.email}`,
     password: `${req.body.password}`,
     contents: []
