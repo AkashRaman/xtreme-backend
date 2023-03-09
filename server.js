@@ -75,9 +75,17 @@ app.post('/user/register', async (req,res) => {
 
 app.post('/user', async (req,res) => {
   console.log(req.body);
-  const token = new mongoose.Types.ObjectId(req.body.token);
-  const user = await Users.findOne({ '_id': token });
-  return res.send(user);
+  const token = req.body.token;
+  await Users.findById(token, function(error, user) {
+    if(error) res.send({
+      first_name: `Unavailable`,
+      last_name: ``,
+      email: ``,
+      password: ``,
+      contents: []
+    });
+    res.send(user);
+  });
 })
  
 app.listen(port, () => {
