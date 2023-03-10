@@ -72,6 +72,23 @@ app.post('/user/register', async (req,res) => {
   const result = await user.save();
   
   return res.send(result);
+});
+
+app.post('/user/add/:id', async (req,res) => {
+  // const user = new Users({
+  //   first_name: `${req.body.user.first_name}`,
+  //   last_name: `${req.body.user.last_name}`,
+  //   email: `${req.body.user.email}`,
+  //   password: `${req.body.user.password}`,
+  //   contents: req.body.user.contents
+  // });
+  try{
+    await Users.updateOne({ _id: req.params.id}, {contents: req.body.user.contents});
+    return res.send('true');
+  } catch(err) {
+    return res.send('false');
+  }
+  
 })
 
 app.post('/user', async (req,res) => {
