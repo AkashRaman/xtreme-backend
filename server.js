@@ -112,7 +112,7 @@ app.post('/user/modify/:id/:index', async (req,res) => {
   
 })
 
-app.post('/user/delete/:id/:index', async (req,res) => {
+app.post('/user/del/:id/:index', async (req,res) => {
     const index = req.params.index;
     const user = await User.findById(req.params.id);
     user.contents.splice(index, 1);
