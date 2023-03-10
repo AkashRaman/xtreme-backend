@@ -84,7 +84,7 @@ app.post('/user/add/:id', async (req,res) => {
   //   contents: req.body.user.contents
   // });
     const user = await User.findById(req.params.id);
-    user.contents.unshift(req.body.contents);
+    user.contents.unshift(req.body.content);
     console.log("working");
     console.log(req.body);
     const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
