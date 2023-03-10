@@ -93,6 +93,25 @@ app.post('/user/add/:id', async (req,res) => {
   
 })
 
+app.post('/user/modify/:id/:index', async (req,res) => {
+  // const user = new Users({
+  //   first_name: `${req.body.user.first_name}`,
+  //   last_name: `${req.body.user.last_name}`,
+  //   email: `${req.body.user.email}`,
+  //   password: `${req.body.user.password}`,
+  //   contents: req.body.user.contents
+  // });
+    const index = req.params.index;
+    const user = await User.findById(req.params.id);
+    user.contents[index] = req.body.newContent;
+    console.log("working");
+    const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
+    if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
+    console.log(result);
+    return res.send(user);
+  
+})
+
 app.post('/user', async (req,res) => {
   console.log(req.body);
   const token = req.body.token;
