@@ -112,6 +112,18 @@ app.post('/user/modify/:id/:index', async (req,res) => {
   
 })
 
+app.post('/user/delete/:id/:index', async (req,res) => {
+    const index = req.params.index;
+    const user = await User.findById(req.params.id);
+    user.contents.splice(index, 1);
+    console.log("working");
+    const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
+    if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
+    console.log(result);
+    return res.send(user);
+  
+})
+
 app.post('/user', async (req,res) => {
   console.log(req.body);
   const token = req.body.token;
