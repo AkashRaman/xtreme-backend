@@ -82,12 +82,9 @@ app.post('/user/add/:id', async (req,res) => {
   //   password: `${req.body.user.password}`,
   //   contents: req.body.user.contents
   // });
-  try{
-    await Users.updateOne({ _id: req.params.id}, {contents: req.body.user.contents});
-    return res.send('true');
-  } catch(err) {
-    return res.send('false');
-  }
+    const result = await Users.updateOne({ _id: req.params.id}, {contents: req.body.user.contents});
+    if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
+    return res.send(true);
   
 })
 
