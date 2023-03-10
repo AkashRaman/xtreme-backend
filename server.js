@@ -86,7 +86,6 @@ app.post('/user/add/:id', async (req,res) => {
     const user = await User.findById(req.params.id);
     user.contents.unshift(req.body.content);
     console.log("working");
-    console.log(req.body);
     const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
     if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
     console.log(result);
