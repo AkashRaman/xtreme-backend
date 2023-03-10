@@ -13,6 +13,7 @@ app.use(express.json());
 // app.use(require("./routes/record"));
 // get driver connection
 const dbo = require("./db/conn");
+const User = require("./model/User");
 
 app.get('*', async(req,res) => {
   // await Users.deleteMany({});
@@ -82,11 +83,14 @@ app.post('/user/add/:id', async (req,res) => {
   //   password: `${req.body.user.password}`,
   //   contents: req.body.user.contents
   // });
+    const user = await User.findById(req.params.id);
+    user.contents.unshift(req.body.contents);
     console.log("working");
     console.log(req.body);
-    const result = await Users.updateOne({ _id: req.params.id}, {contents: req.body.contents});
+    const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
     if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
-    return res.send(true);
+    console.log(result);
+    return res.send(user);
   
 })
 
