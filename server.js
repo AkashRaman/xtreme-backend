@@ -126,7 +126,7 @@ app.post('/user/modify/:id/:index', async (req,res) => {
       } else if(title === ''){
         return res.send(500, { error: 'Enter Title' });
       }  else{
-        return res.send(500, { error: 'Enter Subtitles' });
+        return res.send(500, { error: 'Enter Text Area' });
       }
     }
 
