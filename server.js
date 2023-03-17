@@ -83,8 +83,22 @@ app.post('/user/add/:id', async (req,res) => {
   //   password: `${req.body.user.password}`,
   //   contents: req.body.user.contents
   // });
+    const content = req.body.content;
+    const title = content.title;
+    const description = content.description;
+
+    if(title === '' || description === ''){
+      if(title === '' && description === ''){
+        return res.send(500, { error: 'Enter all details' });
+      } else if(title === ''){
+        return res.send(500, { error: 'Enter Title' });
+      }  else{
+        return res.send(500, { error: 'Enter Subtitles' });
+      }
+    }
+
     const user = await User.findById(req.params.id);
-    user.contents.unshift(req.body.content);
+    user.contents.unshift(content);
     console.log("working");
     const result = await Users.updateOne({ _id: req.params.id}, {contents: user.contents});
     if(result === undefined) return res.send(500, { error: 'Something Went wrong' });
@@ -101,6 +115,21 @@ app.post('/user/modify/:id/:index', async (req,res) => {
   //   password: `${req.body.user.password}`,
   //   contents: req.body.user.contents
   // });
+
+    const content = req.body.content;
+    const title = content.title;
+    const description = content.description;
+
+    if(title === '' || description === ''){
+      if(title === '' && description === ''){
+        return res.send(500, { error: 'Enter all details' });
+      } else if(title === ''){
+        return res.send(500, { error: 'Enter Title' });
+      }  else{
+        return res.send(500, { error: 'Enter Subtitles' });
+      }
+    }
+
     const index = req.params.index;
     const user = await User.findById(req.params.id);
     user.contents[index] = req.body.newContent;
