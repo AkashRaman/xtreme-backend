@@ -2,7 +2,6 @@ const express = require("express");
 const app = express();
 const cors = require("cors");
 const Users = require("./model/User");
-const mongoose = require('mongoose');
 const ObjectId = require('mongodb').ObjectId;
 var morgan = require('morgan');
 require("dotenv").config({ path: "./config.env" });
@@ -10,8 +9,6 @@ const port = process.env.PORT || 3000;
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-// app.use(require("./routes/record"));
-// get driver connection
 const dbo = require("./db/conn");
 const User = require("./model/User");
 
@@ -76,13 +73,6 @@ app.post('/user/register', async (req,res) => {
 });
 
 app.post('/user/add/:id', async (req,res) => {
-  // const user = new Users({
-  //   first_name: `${req.body.user.first_name}`,
-  //   last_name: `${req.body.user.last_name}`,
-  //   email: `${req.body.user.email}`,
-  //   password: `${req.body.user.password}`,
-  //   contents: req.body.user.contents
-  // });
     const content = req.body.content;
     const title = content.title;
     const description = content.description;
@@ -108,13 +98,6 @@ app.post('/user/add/:id', async (req,res) => {
 })
 
 app.post('/user/modify/:id/:index', async (req,res) => {
-  // const user = new Users({
-  //   first_name: `${req.body.user.first_name}`,
-  //   last_name: `${req.body.user.last_name}`,
-  //   email: `${req.body.user.email}`,
-  //   password: `${req.body.user.password}`,
-  //   contents: req.body.user.contents
-  // });
 
     const content = req.body.content;
     const title = content.title;
@@ -175,8 +158,3 @@ app.listen(port, () => {
   dbo.connectToServer();
   console.log(`Server is running on port: ${port}`);
 });
-
-// const camp = new User({
-//   name: ""
-// });
-// await camp.save();
